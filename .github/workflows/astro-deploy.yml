@@ -50,7 +50,7 @@ jobs:
       - name: Fix ownership on remote
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "sudo chown -R ${{ secrets.SSH_USER }}:$USER 
+            "sudo chown -R ${{ secrets.SSH_USER }}:$USER ${{ inputs.target-path }}"
 
       - name: Deploy via rsync
         run: |
