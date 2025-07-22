@@ -45,8 +45,12 @@ jobs:
       - name: Ensure target directory exists on remote
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "mkdir -p '${{ inputs.target-path }}'"
+            "sudo mkdir -p '${{ inputs.target-path }}'"
 
+      - name: Fix ownership on remote
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "sudo chown -R ${{ secrets.SSH_USER }}:$USER 
 
       - name: Deploy via rsync
         run: |
