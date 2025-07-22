@@ -42,6 +42,12 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Ensure target directory exists on remote
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "mkdir -p '${{ inputs.target-path }}'"
+
+
       - name: Deploy via rsync
         run: |
           rsync -avz --delete -e "ssh -i ~/.ssh/id_ed25519" \
